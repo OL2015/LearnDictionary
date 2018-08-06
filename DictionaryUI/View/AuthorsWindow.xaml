@@ -1,0 +1,56 @@
+﻿<Window x:Class="DictionaryUI.AuthorsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm ="clr-namespace:DictionaryUI.ViewModel"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
+        xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
+        xmlns:ignore="http://www.galasoft.ch/ignore" 
+        Title="AuthorsWindow" SizeToContent="WidthAndHeight"
+        DataContext="{Binding AuthorsViewModel, Source={StaticResource  Locator}}">
+
+    <StackPanel>
+        <Label Content="Authors" />
+        <DataGrid x:Name="dgAuthors" AutoGenerateColumns="False" CanUserAddRows="false" ItemsSource="{Binding Authors}" 
+                  SelectedItem="{Binding SelectedAuthor}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Author ID" Binding="{Binding Path=Author_ID }" ></DataGridTextColumn>
+                <DataGridTextColumn Header="Name" Binding="{Binding Path=Name, UpdateSourceTrigger=PropertyChanged}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Books" Binding="{Binding Path=Books.Count, Mode=OneWay}"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Label Content="Author card"/>
+        <StackPanel Orientation="Horizontal">
+            <StackPanel Width="75" 
+                        HorizontalAlignment="Left"
+                        Margin="10">
+                <Label Content="Author ID"/>
+                <TextBlock Name="txtID"
+                           Text="{Binding Path=SelectedAuthor.Author_ID}"/>
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Stretch"
+                        Margin="10" MinWidth="150">
+                <Label Content="Author Name"/>
+                <TextBox Name="bxAuthorName" 
+                         Text="{Binding Path=SelectedAuthor.Name, UpdateSourceTrigger=PropertyChanged}"  >
+                    <TextBox.Style>
+                        <Style TargetType="{x:Type TextBox}">
+                            <Setter Property="IsEnabled" Value="True"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding SelectedAuthor}" Value="{x:Null}"> 
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBox.Style>
+                    
+                </TextBox>
+            </StackPanel>
+        </StackPanel>
+        <Button Name="btnAddAuthor" Content="Add Author"
+                Margin="10" Command="{Binding AddAuthorCommand}" />
+        <Button Name="btnDelAuthor" Content="Delete Author"
+                Margin="10" Command="{Binding DeleteAuthorCommand}" />
+        <Button Name="btnSaveAuthors" Content="Save"
+                Margin="10" Command="{Binding SaveAuthorsCommand}" />
+    </StackPanel>
+</Window>

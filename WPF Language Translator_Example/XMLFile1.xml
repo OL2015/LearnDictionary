@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DicResult>
+  <head />
+  <def pos="noun" ts="mæʧ">
+    <text>match</text>
+    <tr pos="іменник">
+      <text>матч</text>
+    </tr>
+    <tr pos="іменник">
+      <text>сірник</text>
+      <mean>
+        <text>safety match</text>
+      </mean>
+    </tr>
+    <tr pos="іменник">
+      <text>суперник</text>
+    </tr>
+    <tr pos="іменник">
+      <text>зустріч</text>
+      <mean>
+        <text>game</text>
+      </mean>
+    </tr>
+    <tr pos="іменник">
+      <text>пара</text>
+      <mean>
+        <text>suit</text>
+      </mean>
+    </tr>
+    <tr pos="іменник">
+      <text>під стать</text>
+    </tr>
+    <tr pos="іменник">
+      <text>змагання</text>
+      <mean>
+        <text>game</text>
+      </mean>
+    </tr>
+    <tr pos="іменник">
+      <text>рівня</text>
+      <mean>
+        <text>peer</text>
+      </mean>
+    </tr>
+    <tr pos="іменник">
+      <text>людина</text>
+    </tr>
+    <tr pos="іменник">
+      <text>річ</text>
+    </tr>
+  </def>
+  <def pos="verb" ts="mæʧ">
+    <text>match</text>
+    <tr pos="дієслово">
+      <text>відповідати</text>
+      <mean>
+        <text>meet</text>
+      </mean>
+    </tr>
+    <tr pos="дієслово">
+      <text>співпадати</text>
+    </tr>
+    <tr pos="дієслово">
+      <text>підходити</text>
+      <mean>
+        <text>suit</text>
+      </mean>
+    </tr>
+    <tr pos="дієслово">
+      <text>підбирати</text>
+      <mean>
+        <text>select</text>
+      </mean>
+    </tr>
+    <tr pos="дієслово">
+      <text>гармоніювати</text>
+      <mean>
+        <text>blend</text>
+      </mean>
+    </tr>
+  </def>
+</DicResult>

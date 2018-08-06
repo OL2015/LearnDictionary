@@ -1,0 +1,45 @@
+﻿<Window x:Class="DictionaryUI.BooksList"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"  
+         xmlns:vm ="clr-namespace:DictionaryUI.ViewModel"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
+        xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
+        xmlns:ignore="http://www.galasoft.ch/ignore" 
+         Title="Books" MaxHeight="500" SizeToContent="WidthAndHeight" 
+        DataContext="{Binding BookListViewModel, Source={StaticResource Locator}}">
+    
+    <StackPanel Margin="10">
+        <Label Content="Books" />
+        <DataGrid Name="dgBooks" 
+                  MinHeight="50" 
+                  AutoGenerateColumns="False" 
+                  ScrollViewer.VerticalScrollBarVisibility="Auto"
+                  SelectionMode="Extended"
+                  CanUserAddRows="false"
+                  ItemsSource="{Binding Books}"
+                  SelectedItem="{Binding SelectedBook}"
+                  >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Book ID" Binding="{Binding Path=Book_ID}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Authors" Binding="{Binding Path=AuthorsString, Mode=OneWay}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Language" Binding="{Binding Path=Language.ShortName, Mode=OneWay}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Number Of Pages" Binding="{Binding Path=NumberOfPages}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Book Format" Binding="{Binding Path=Format.Name, Mode=OneWay}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Register Date" Binding="{Binding Path=RegisterDate, StringFormat={}{0:dd.MM.yyyy}}"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Name="addNewBook"
+                Content="Add Book"
+                Margin="0 10 0 5"
+                Padding="0 5" Command="{Binding AddBookCommand}" />
+        <Button Name="editBook"
+                Content="Edit Book"
+                Margin="0 5"
+                Padding="0 5"  Command="{Binding EditBookCommand}" />
+        <Button Name="delBook"
+                Content="Delete Book"
+                Margin="0 5"
+                Padding="0 5"  Command="{Binding DeleteBookCommand}" />
+    </StackPanel>
+</Window>

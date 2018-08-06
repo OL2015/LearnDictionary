@@ -1,0 +1,826 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="LearnDictionaryModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Author">
+          <Key>
+            <PropertyRef Name="Author_ID" />
+          </Key>
+          <Property Name="Author_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="40" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AuthorBook">
+          <Key>
+            <PropertyRef Name="Book_ID" />
+            <PropertyRef Name="Author_ID" />
+          </Key>
+          <Property Name="Book_ID" Type="int" Nullable="false" />
+          <Property Name="Author_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Book">
+          <Key>
+            <PropertyRef Name="Book_ID" />
+          </Key>
+          <Property Name="Book_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Language_ID" Type="int" Nullable="false" />
+          <Property Name="NumberOfPages" Type="int" Nullable="false" />
+          <Property Name="Format_ID" Type="int" Nullable="false" />
+          <Property Name="RegisterDate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Format">
+          <Key>
+            <PropertyRef Name="Format_ID" />
+          </Key>
+          <Property Name="Format_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Language">
+          <Key>
+            <PropertyRef Name="Language_ID" />
+          </Key>
+          <Property Name="Language_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ShortName" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LearnStatistic">
+          <Key>
+            <PropertyRef Name="LearnStatistics_ID" />
+          </Key>
+          <Property Name="LearnStatistics_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WordMeaning_ID" Type="int" Nullable="false" />
+          <Property Name="AttempTime" Type="datetime" Nullable="false" />
+          <Property Name="Answer" Type="bit" Nullable="false" />
+          <Property Name="LearnDirection" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SpeechPart">
+          <Key>
+            <PropertyRef Name="SpeechPart_ID" />
+          </Key>
+          <Property Name="SpeechPart_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameEng" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="NameUkr" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="ShortEng" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="ShortUkr" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Word">
+          <Key>
+            <PropertyRef Name="Word_ID" />
+          </Key>
+          <Property Name="Word_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Value" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Language_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WordEntry">
+          <Key>
+            <PropertyRef Name="WordEntry_ID" />
+          </Key>
+          <Property Name="WordEntry_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Book_ID" Type="int" Nullable="false" />
+          <Property Name="Word_ID" Type="int" Nullable="false" />
+          <Property Name="Page" Type="int" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WordMeaning">
+          <Key>
+            <PropertyRef Name="WordMeaning_ID" />
+          </Key>
+          <Property Name="WordMeaning_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MasterWord_ID" Type="int" Nullable="false" />
+          <Property Name="TranslateWord_ID" Type="int" Nullable="false" />
+          <Property Name="SpeechPart_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="WordMeaningStatistic">
+          <Key>
+            <PropertyRef Name="WordMeaningStatistic_ID" />
+          </Key>
+          <Property Name="WordMeaningStatistic_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WordMeaning_ID" Type="int" Nullable="false" />
+          <Property Name="NewEntry" Type="bit" Nullable="false" />
+          <Property Name="EntryTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WordTranslation">
+          <Key>
+            <PropertyRef Name="WordEntry_ID" />
+            <PropertyRef Name="WordMeaning_ID" />
+          </Key>
+          <Property Name="WordEntry_ID" Type="int" Nullable="false" />
+          <Property Name="WordMeaning_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_AuthorBook_Author">
+          <End Role="Author" Type="Self.Author" Multiplicity="1" />
+          <End Role="AuthorBook" Type="Self.AuthorBook" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Author">
+              <PropertyRef Name="Author_ID" />
+            </Principal>
+            <Dependent Role="AuthorBook">
+              <PropertyRef Name="Author_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AuthorBook_Book">
+          <End Role="Book" Type="Self.Book" Multiplicity="1" />
+          <End Role="AuthorBook" Type="Self.AuthorBook" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="Book_ID" />
+            </Principal>
+            <Dependent Role="AuthorBook">
+              <PropertyRef Name="Book_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Book_Format">
+          <End Role="Format" Type="Self.Format" Multiplicity="1" />
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Format">
+              <PropertyRef Name="Format_ID" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="Format_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Book_Language">
+          <End Role="Language" Type="Self.Language" Multiplicity="1" />
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="Language_ID" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="Language_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LearnStatistic_WordMeaning">
+          <End Role="WordMeaning" Type="Self.WordMeaning" Multiplicity="1" />
+          <End Role="LearnStatistic" Type="Self.LearnStatistic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WordMeaning">
+              <PropertyRef Name="WordMeaning_ID" />
+            </Principal>
+            <Dependent Role="LearnStatistic">
+              <PropertyRef Name="WordMeaning_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Word_Language">
+          <End Role="Language" Type="Self.Language" Multiplicity="1" />
+          <End Role="Word" Type="Self.Word" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="Language_ID" />
+            </Principal>
+            <Dependent Role="Word">
+              <PropertyRef Name="Language_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WordEntry_Book">
+          <End Role="Book" Type="Self.Book" Multiplicity="1" />
+          <End Role="WordEntry" Type="Self.WordEntry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="Book_ID" />
+            </Principal>
+            <Dependent Role="WordEntry">
+              <PropertyRef Name="Book_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WordEntry_Word">
+          <End Role="Word" Type="Self.Word" Multiplicity="1" />
+          <End Role="WordEntry" Type="Self.WordEntry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Word">
+              <PropertyRef Name="Word_ID" />
+            </Principal>
+            <Dependent Role="WordEntry">
+              <PropertyRef Name="Word_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WordMeaning_MasterWord">
+          <End Role="Word" Type="Self.Word" Multiplicity="1" />
+          <End Role="WordMeaning" Type="Self.WordMeaning" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Word">
+              <PropertyRef Name="Word_ID" />
+            </Principal>
+            <Dependent Role="WordMeaning">
+              <PropertyRef Name="MasterWord_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WordMeaning_SpeechPart">
+          <End Role="SpeechPart" Type="Self.SpeechPart" Multiplicity="0..1" />
+          <End Role="WordMeaning" Type="Self.WordMeaning" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SpeechPart">
+              <PropertyRef Name="SpeechPart_ID" />
+            </Principal>
+            <Dependent Role="WordMeaning">
+              <PropertyRef Name="SpeechPart_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WordMeaning_TranslateWord">
+          <End Role="Word" Type="Self.Word" Multiplicity="1" />
+          <End Role="WordMeaning" Type="Self.WordMeaning" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Word">
+              <PropertyRef Name="Word_ID" />
+            </Principal>
+            <Dependent Role="WordMeaning">
+              <PropertyRef Name="TranslateWord_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WordMeaningStatistic_WordMeaning">
+          <End Role="WordMeaning" Type="Self.WordMeaning" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="WordMeaningStatistic" Type="Self.WordMeaningStatistic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WordMeaning">
+              <PropertyRef Name="WordMeaning_ID" />
+            </Principal>
+            <Dependent Role="WordMeaningStatistic">
+              <PropertyRef Name="WordMeaning_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WordTranslation_WordEntry">
+          <End Role="WordEntry" Type="Self.WordEntry" Multiplicity="1" />
+          <End Role="WordTranslation" Type="Self.WordTranslation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WordEntry">
+              <PropertyRef Name="WordEntry_ID" />
+            </Principal>
+            <Dependent Role="WordTranslation">
+              <PropertyRef Name="WordEntry_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WordTranslation_WordMeaning">
+          <End Role="WordMeaning" Type="Self.WordMeaning" Multiplicity="1" />
+          <End Role="WordTranslation" Type="Self.WordTranslation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WordMeaning">
+              <PropertyRef Name="WordMeaning_ID" />
+            </Principal>
+            <Dependent Role="WordTranslation">
+              <PropertyRef Name="WordMeaning_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LearnDictionaryModelStoreContainer">
+          <EntitySet Name="Author" EntityType="Self.Author" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AuthorBook" EntityType="Self.AuthorBook" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Book" EntityType="Self.Book" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Format" EntityType="Self.Format" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Language" EntityType="Self.Language" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LearnStatistic" EntityType="Self.LearnStatistic" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SpeechPart" EntityType="Self.SpeechPart" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Word" EntityType="Self.Word" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WordEntry" EntityType="Self.WordEntry" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WordMeaning" EntityType="Self.WordMeaning" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WordMeaningStatistic" EntityType="Self.WordMeaningStatistic" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WordTranslation" EntityType="Self.WordTranslation" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AuthorBook_Author" Association="Self.FK_AuthorBook_Author">
+            <End Role="Author" EntitySet="Author" />
+            <End Role="AuthorBook" EntitySet="AuthorBook" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AuthorBook_Book" Association="Self.FK_AuthorBook_Book">
+            <End Role="Book" EntitySet="Book" />
+            <End Role="AuthorBook" EntitySet="AuthorBook" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Book_Format" Association="Self.FK_Book_Format">
+            <End Role="Format" EntitySet="Format" />
+            <End Role="Book" EntitySet="Book" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Book_Language" Association="Self.FK_Book_Language">
+            <End Role="Language" EntitySet="Language" />
+            <End Role="Book" EntitySet="Book" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LearnStatistic_WordMeaning" Association="Self.FK_LearnStatistic_WordMeaning">
+            <End Role="WordMeaning" EntitySet="WordMeaning" />
+            <End Role="LearnStatistic" EntitySet="LearnStatistic" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Word_Language" Association="Self.FK_Word_Language">
+            <End Role="Language" EntitySet="Language" />
+            <End Role="Word" EntitySet="Word" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WordEntry_Book" Association="Self.FK_WordEntry_Book">
+            <End Role="Book" EntitySet="Book" />
+            <End Role="WordEntry" EntitySet="WordEntry" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WordEntry_Word" Association="Self.FK_WordEntry_Word">
+            <End Role="Word" EntitySet="Word" />
+            <End Role="WordEntry" EntitySet="WordEntry" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WordMeaning_MasterWord" Association="Self.FK_WordMeaning_MasterWord">
+            <End Role="Word" EntitySet="Word" />
+            <End Role="WordMeaning" EntitySet="WordMeaning" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WordMeaning_SpeechPart" Association="Self.FK_WordMeaning_SpeechPart">
+            <End Role="SpeechPart" EntitySet="SpeechPart" />
+            <End Role="WordMeaning" EntitySet="WordMeaning" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WordMeaning_TranslateWord" Association="Self.FK_WordMeaning_TranslateWord">
+            <End Role="Word" EntitySet="Word" />
+            <End Role="WordMeaning" EntitySet="WordMeaning" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WordMeaningStatistic_WordMeaning" Association="Self.FK_WordMeaningStatistic_WordMeaning">
+            <End Role="WordMeaning" EntitySet="WordMeaning" />
+            <End Role="WordMeaningStatistic" EntitySet="WordMeaningStatistic" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WordTranslation_WordEntry" Association="Self.FK_WordTranslation_WordEntry">
+            <End Role="WordEntry" EntitySet="WordEntry" />
+            <End Role="WordTranslation" EntitySet="WordTranslation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WordTranslation_WordMeaning" Association="Self.FK_WordTranslation_WordMeaning">
+            <End Role="WordMeaning" EntitySet="WordMeaning" />
+            <End Role="WordTranslation" EntitySet="WordTranslation" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LearnDictionaryModel" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2009/11/edm" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+        <EntityType Name="Author">
+          <Key>
+            <PropertyRef Name="Author_ID" />
+          </Key>
+          <Property Name="Author_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="Name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Books" Relationship="Self.AuthorBook" FromRole="Author" ToRole="Book" />
+        </EntityType>
+        <EntityType Name="Book">
+          <Key>
+            <PropertyRef Name="Book_ID" />
+          </Key>
+          <Property Name="Book_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Language_ID" Type="Int32" Nullable="false" />
+          <Property Name="NumberOfPages" Type="Int32" Nullable="false" />
+          <Property Name="Format_ID" Type="Int32" Nullable="false" />
+          <Property Name="RegisterDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Format" Relationship="Self.FK_Book_Format" FromRole="Book" ToRole="Format" />
+          <NavigationProperty Name="Language" Relationship="Self.FK_Book_Language" FromRole="Book" ToRole="Language" />
+          <NavigationProperty Name="Authors" Relationship="Self.AuthorBook" FromRole="Book" ToRole="Author" />
+          <NavigationProperty Name="WordEntries" Relationship="LearnDictionaryModel.FK_WordEntry_Book" FromRole="Book" ToRole="WordEntry" />
+        </EntityType>
+        <EntityType Name="Format">
+          <Key>
+            <PropertyRef Name="Format_ID" />
+          </Key>
+          <Property Name="Format_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="Name" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Books" Relationship="Self.FK_Book_Format" FromRole="Format" ToRole="Book" />
+        </EntityType>
+        <EntityType Name="Language">
+          <Key>
+            <PropertyRef Name="Language_ID" />
+          </Key>
+          <Property Name="Language_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="ShortName" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Books" Relationship="Self.FK_Book_Language" FromRole="Language" ToRole="Book" />
+          <NavigationProperty Name="Words" Relationship="LearnDictionaryModel.FK_Word_Language" FromRole="Language" ToRole="Word" />
+        </EntityType>
+        <Association Name="FK_Book_Format">
+          <End Role="Format" Type="Self.Format" Multiplicity="1" />
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Format">
+              <PropertyRef Name="Format_ID" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="Format_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Book_Language">
+          <End Role="Language" Type="Self.Language" Multiplicity="1" />
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="Language_ID" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="Language_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AuthorBook">
+          <End Role="Author" Type="Self.Author" Multiplicity="*" />
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="LearnDictionaryEntities4" annotation:LazyLoadingEnabled="true" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+          <EntitySet Name="Authors" EntityType="Self.Author" />
+          <EntitySet Name="Books" EntityType="Self.Book" />
+          <EntitySet Name="Formats" EntityType="Self.Format" />
+          <EntitySet Name="Languages" EntityType="Self.Language" />
+          <AssociationSet Name="FK_Book_Format" Association="Self.FK_Book_Format">
+            <End Role="Format" EntitySet="Formats" />
+            <End Role="Book" EntitySet="Books" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Book_Language" Association="Self.FK_Book_Language">
+            <End Role="Language" EntitySet="Languages" />
+            <End Role="Book" EntitySet="Books" />
+          </AssociationSet>
+          <AssociationSet Name="AuthorBook" Association="Self.AuthorBook">
+            <End Role="Author" EntitySet="Authors" />
+            <End Role="Book" EntitySet="Books" />
+          </AssociationSet>
+          <EntitySet Name="LearnStatistics" EntityType="LearnDictionaryModel.LearnStatistic" />
+          <EntitySet Name="Words" EntityType="LearnDictionaryModel.Word" />
+          <EntitySet Name="WordMeanings" EntityType="LearnDictionaryModel.WordMeaning" />
+          <EntitySet Name="WordMeaningStatistics" EntityType="LearnDictionaryModel.WordMeaningStatistic" />
+          <AssociationSet Name="FK_Word_Language" Association="LearnDictionaryModel.FK_Word_Language">
+            <End Role="Language" EntitySet="Languages" />
+            <End Role="Word" EntitySet="Words" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LearnStatistic_WordMeaning" Association="LearnDictionaryModel.FK_LearnStatistic_WordMeaning">
+            <End Role="WordMeaning" EntitySet="WordMeanings" />
+            <End Role="LearnStatistic" EntitySet="LearnStatistics" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WordMeaning_MasterWord" Association="LearnDictionaryModel.FK_WordMeaning_MasterWord">
+            <End Role="Word" EntitySet="Words" />
+            <End Role="WordMeaning" EntitySet="WordMeanings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WordMeaning_TranslateWord" Association="LearnDictionaryModel.FK_WordMeaning_TranslateWord">
+            <End Role="Word" EntitySet="Words" />
+            <End Role="WordMeaning" EntitySet="WordMeanings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WordMeaningStatistic_WordMeaning" Association="LearnDictionaryModel.FK_WordMeaningStatistic_WordMeaning">
+            <End Role="WordMeaning" EntitySet="WordMeanings" />
+            <End Role="WordMeaningStatistic" EntitySet="WordMeaningStatistics" />
+          </AssociationSet>
+          <EntitySet Name="WordEntries" EntityType="LearnDictionaryModel.WordEntry" />
+          <AssociationSet Name="FK_WordEntry_Book" Association="LearnDictionaryModel.FK_WordEntry_Book">
+            <End Role="Book" EntitySet="Books" />
+            <End Role="WordEntry" EntitySet="WordEntries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WordEntry_Word" Association="LearnDictionaryModel.FK_WordEntry_Word">
+            <End Role="Word" EntitySet="Words" />
+            <End Role="WordEntry" EntitySet="WordEntries" />
+          </AssociationSet>
+          <EntitySet Name="SpeechParts" EntityType="LearnDictionaryModel.SpeechPart" />
+          <AssociationSet Name="FK_WordMeaning_SpeechPart" Association="LearnDictionaryModel.FK_WordMeaning_SpeechPart">
+            <End Role="SpeechPart" EntitySet="SpeechParts" />
+            <End Role="WordMeaning" EntitySet="WordMeanings" />
+          </AssociationSet>
+          <AssociationSet Name="WordTranslation" Association="LearnDictionaryModel.WordTranslation">
+            <End Role="WordEntry" EntitySet="WordEntries" />
+            <End Role="WordMeaning" EntitySet="WordMeanings" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="LearnStatistic">
+          <Key>
+            <PropertyRef Name="LearnStatistics_ID" />
+          </Key>
+          <Property Name="LearnStatistics_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="WordMeaning_ID" Type="Int32" Nullable="false" />
+          <Property Name="AttempTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Answer" Type="Boolean" Nullable="false" />
+          <Property Name="LearnDirection" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="WordMeaning" Relationship="LearnDictionaryModel.FK_LearnStatistic_WordMeaning" FromRole="LearnStatistic" ToRole="WordMeaning" />
+        </EntityType>
+        <EntityType Name="Word">
+          <Key>
+            <PropertyRef Name="Word_ID" />
+          </Key>
+          <Property Name="Word_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="Value" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Language_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Language" Relationship="LearnDictionaryModel.FK_Word_Language" FromRole="Word" ToRole="Language" />
+          <NavigationProperty Name="WordMeanings" Relationship="LearnDictionaryModel.FK_WordMeaning_MasterWord" FromRole="Word" ToRole="WordMeaning" />
+          <NavigationProperty Name="WordMeanings1" Relationship="LearnDictionaryModel.FK_WordMeaning_TranslateWord" FromRole="Word" ToRole="WordMeaning" />
+          <NavigationProperty Name="WordEntries" Relationship="LearnDictionaryModel.FK_WordEntry_Word" FromRole="Word" ToRole="WordEntry" />
+        </EntityType>
+        <EntityType Name="WordMeaning">
+          <Key>
+            <PropertyRef Name="WordMeaning_ID" />
+          </Key>
+          <Property Name="WordMeaning_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="MasterWord_ID" Type="Int32" Nullable="false" />
+          <Property Name="TranslateWord_ID" Type="Int32" Nullable="false" />
+          <Property Name="SpeechPart_ID" Type="Int32" />
+          <NavigationProperty Name="LearnStatistics" Relationship="LearnDictionaryModel.FK_LearnStatistic_WordMeaning" FromRole="WordMeaning" ToRole="LearnStatistic" />
+          <NavigationProperty Name="Word" Relationship="LearnDictionaryModel.FK_WordMeaning_MasterWord" FromRole="WordMeaning" ToRole="Word" />
+          <NavigationProperty Name="Word1" Relationship="LearnDictionaryModel.FK_WordMeaning_TranslateWord" FromRole="WordMeaning" ToRole="Word" />
+          <NavigationProperty Name="WordMeaningStatistics" Relationship="LearnDictionaryModel.FK_WordMeaningStatistic_WordMeaning" FromRole="WordMeaning" ToRole="WordMeaningStatistic" />
+          <NavigationProperty Name="SpeechPart" Relationship="LearnDictionaryModel.FK_WordMeaning_SpeechPart" FromRole="WordMeaning" ToRole="SpeechPart" />
+          <NavigationProperty Name="WordEntries" Relationship="LearnDictionaryModel.WordTranslation" FromRole="WordMeaning" ToRole="WordEntry" />
+        </EntityType>
+        <EntityType Name="WordMeaningStatistic">
+          <Key>
+            <PropertyRef Name="WordMeaningStatistic_ID" />
+          </Key>
+          <Property Name="WordMeaningStatistic_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="WordMeaning_ID" Type="Int32" Nullable="false" />
+          <Property Name="NewEntry" Type="Boolean" Nullable="false" />
+          <Property Name="EntryTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="WordMeaning" Relationship="LearnDictionaryModel.FK_WordMeaningStatistic_WordMeaning" FromRole="WordMeaningStatistic" ToRole="WordMeaning" />
+        </EntityType>
+        <Association Name="FK_Word_Language">
+          <End Type="LearnDictionaryModel.Language" Role="Language" Multiplicity="1" />
+          <End Type="LearnDictionaryModel.Word" Role="Word" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="Language_ID" />
+            </Principal>
+            <Dependent Role="Word">
+              <PropertyRef Name="Language_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LearnStatistic_WordMeaning">
+          <End Type="LearnDictionaryModel.WordMeaning" Role="WordMeaning" Multiplicity="1" />
+          <End Type="LearnDictionaryModel.LearnStatistic" Role="LearnStatistic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WordMeaning">
+              <PropertyRef Name="WordMeaning_ID" />
+            </Principal>
+            <Dependent Role="LearnStatistic">
+              <PropertyRef Name="WordMeaning_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WordMeaning_MasterWord">
+          <End Type="LearnDictionaryModel.Word" Role="Word" Multiplicity="1" />
+          <End Type="LearnDictionaryModel.WordMeaning" Role="WordMeaning" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Word">
+              <PropertyRef Name="Word_ID" />
+            </Principal>
+            <Dependent Role="WordMeaning">
+              <PropertyRef Name="MasterWord_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WordMeaning_TranslateWord">
+          <End Type="LearnDictionaryModel.Word" Role="Word" Multiplicity="1" />
+          <End Type="LearnDictionaryModel.WordMeaning" Role="WordMeaning" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Word">
+              <PropertyRef Name="Word_ID" />
+            </Principal>
+            <Dependent Role="WordMeaning">
+              <PropertyRef Name="TranslateWord_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WordMeaningStatistic_WordMeaning">
+          <End Type="LearnDictionaryModel.WordMeaning" Role="WordMeaning" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="LearnDictionaryModel.WordMeaningStatistic" Role="WordMeaningStatistic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WordMeaning">
+              <PropertyRef Name="WordMeaning_ID" />
+            </Principal>
+            <Dependent Role="WordMeaningStatistic">
+              <PropertyRef Name="WordMeaning_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="WordEntry">
+          <Key>
+            <PropertyRef Name="WordEntry_ID" />
+          </Key>
+          <Property Name="WordEntry_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="Book_ID" Type="Int32" Nullable="false" />
+          <Property Name="Word_ID" Type="Int32" Nullable="false" />
+          <Property Name="Page" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Book" Relationship="LearnDictionaryModel.FK_WordEntry_Book" FromRole="WordEntry" ToRole="Book" />
+          <NavigationProperty Name="Word" Relationship="LearnDictionaryModel.FK_WordEntry_Word" FromRole="WordEntry" ToRole="Word" />
+          <NavigationProperty Name="WordMeanings" Relationship="LearnDictionaryModel.WordTranslation" FromRole="WordEntry" ToRole="WordMeaning" />
+        </EntityType>
+        <Association Name="FK_WordEntry_Book">
+          <End Type="LearnDictionaryModel.Book" Role="Book" Multiplicity="1" />
+          <End Type="LearnDictionaryModel.WordEntry" Role="WordEntry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="Book_ID" />
+            </Principal>
+            <Dependent Role="WordEntry">
+              <PropertyRef Name="Book_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WordEntry_Word">
+          <End Type="LearnDictionaryModel.Word" Role="Word" Multiplicity="1" />
+          <End Type="LearnDictionaryModel.WordEntry" Role="WordEntry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Word">
+              <PropertyRef Name="Word_ID" />
+            </Principal>
+            <Dependent Role="WordEntry">
+              <PropertyRef Name="Word_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="SpeechPart">
+          <Key>
+            <PropertyRef Name="SpeechPart_ID" />
+          </Key>
+          <Property Name="SpeechPart_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameEng" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="NameUkr" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="ShortEng" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ShortUkr" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="WordMeanings" Relationship="LearnDictionaryModel.FK_WordMeaning_SpeechPart" FromRole="SpeechPart" ToRole="WordMeaning" />
+        </EntityType>
+        <Association Name="FK_WordMeaning_SpeechPart">
+          <End Type="LearnDictionaryModel.SpeechPart" Role="SpeechPart" Multiplicity="0..1" />
+          <End Type="LearnDictionaryModel.WordMeaning" Role="WordMeaning" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SpeechPart">
+              <PropertyRef Name="SpeechPart_ID" />
+            </Principal>
+            <Dependent Role="WordMeaning">
+              <PropertyRef Name="SpeechPart_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="WordTranslation">
+          <End Type="LearnDictionaryModel.WordEntry" Role="WordEntry" Multiplicity="*" />
+          <End Type="LearnDictionaryModel.WordMeaning" Role="WordMeaning" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LearnDictionaryModelStoreContainer" CdmEntityContainer="LearnDictionaryEntities4">
+          <EntitySetMapping Name="Authors">
+            <EntityTypeMapping TypeName="LearnDictionaryModel.Author">
+              <MappingFragment StoreEntitySet="Author">
+                <ScalarProperty Name="Author_ID" ColumnName="Author_ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Books">
+            <EntityTypeMapping TypeName="LearnDictionaryModel.Book">
+              <MappingFragment StoreEntitySet="Book">
+                <ScalarProperty Name="Book_ID" ColumnName="Book_ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Language_ID" ColumnName="Language_ID" />
+                <ScalarProperty Name="NumberOfPages" ColumnName="NumberOfPages" />
+                <ScalarProperty Name="Format_ID" ColumnName="Format_ID" />
+                <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Formats">
+            <EntityTypeMapping TypeName="LearnDictionaryModel.Format">
+              <MappingFragment StoreEntitySet="Format">
+                <ScalarProperty Name="Format_ID" ColumnName="Format_ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Languages">
+            <EntityTypeMapping TypeName="LearnDictionaryModel.Language">
+              <MappingFragment StoreEntitySet="Language">
+                <ScalarProperty Name="Language_ID" ColumnName="Language_ID" />
+                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AuthorBook" TypeName="LearnDictionaryModel.AuthorBook" StoreEntitySet="AuthorBook">
+            <EndProperty Name="Author">
+              <ScalarProperty Name="Author_ID" ColumnName="Author_ID" />
+            </EndProperty>
+            <EndProperty Name="Book">
+              <ScalarProperty Name="Book_ID" ColumnName="Book_ID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="LearnStatistics">
+            <EntityTypeMapping TypeName="LearnDictionaryModel.LearnStatistic">
+              <MappingFragment StoreEntitySet="LearnStatistic">
+                <ScalarProperty Name="LearnDirection" ColumnName="LearnDirection" />
+                <ScalarProperty Name="Answer" ColumnName="Answer" />
+                <ScalarProperty Name="AttempTime" ColumnName="AttempTime" />
+                <ScalarProperty Name="WordMeaning_ID" ColumnName="WordMeaning_ID" />
+                <ScalarProperty Name="LearnStatistics_ID" ColumnName="LearnStatistics_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Words">
+            <EntityTypeMapping TypeName="LearnDictionaryModel.Word">
+              <MappingFragment StoreEntitySet="Word">
+                <ScalarProperty Name="Language_ID" ColumnName="Language_ID" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Word_ID" ColumnName="Word_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WordMeanings">
+            <EntityTypeMapping TypeName="LearnDictionaryModel.WordMeaning">
+              <MappingFragment StoreEntitySet="WordMeaning">
+                <ScalarProperty Name="SpeechPart_ID" ColumnName="SpeechPart_ID" />
+                <ScalarProperty Name="TranslateWord_ID" ColumnName="TranslateWord_ID" />
+                <ScalarProperty Name="MasterWord_ID" ColumnName="MasterWord_ID" />
+                <ScalarProperty Name="WordMeaning_ID" ColumnName="WordMeaning_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WordMeaningStatistics">
+            <EntityTypeMapping TypeName="LearnDictionaryModel.WordMeaningStatistic">
+              <MappingFragment StoreEntitySet="WordMeaningStatistic">
+                <ScalarProperty Name="EntryTime" ColumnName="EntryTime" />
+                <ScalarProperty Name="NewEntry" ColumnName="NewEntry" />
+                <ScalarProperty Name="WordMeaning_ID" ColumnName="WordMeaning_ID" />
+                <ScalarProperty Name="WordMeaningStatistic_ID" ColumnName="WordMeaningStatistic_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WordEntries">
+            <EntityTypeMapping TypeName="LearnDictionaryModel.WordEntry">
+              <MappingFragment StoreEntitySet="WordEntry">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Page" ColumnName="Page" />
+                <ScalarProperty Name="Word_ID" ColumnName="Word_ID" />
+                <ScalarProperty Name="Book_ID" ColumnName="Book_ID" />
+                <ScalarProperty Name="WordEntry_ID" ColumnName="WordEntry_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SpeechParts">
+            <EntityTypeMapping TypeName="LearnDictionaryModel.SpeechPart">
+              <MappingFragment StoreEntitySet="SpeechPart">
+                <ScalarProperty Name="ShortUkr" ColumnName="ShortUkr" />
+                <ScalarProperty Name="ShortEng" ColumnName="ShortEng" />
+                <ScalarProperty Name="NameUkr" ColumnName="NameUkr" />
+                <ScalarProperty Name="NameEng" ColumnName="NameEng" />
+                <ScalarProperty Name="SpeechPart_ID" ColumnName="SpeechPart_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="WordTranslation" TypeName="LearnDictionaryModel.WordTranslation" StoreEntitySet="WordTranslation">
+            <EndProperty Name="WordMeaning">
+              <ScalarProperty Name="WordMeaning_ID" ColumnName="WordMeaning_ID" />
+            </EndProperty>
+            <EndProperty Name="WordEntry">
+              <ScalarProperty Name="WordEntry_ID" ColumnName="WordEntry_ID" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams >
+      <Diagram DiagramId="13b9161886f14caa90fe22a6f2ae1762" Name="Diagram1">
+        <EntityTypeShape EntityType="LearnDictionaryModel.Author" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="LearnDictionaryModel.Book" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LearnDictionaryModel.Format" Width="1.5" PointX="0.75" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="LearnDictionaryModel.Language" Width="1.5" PointX="0.75" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LearnDictionaryModel.LearnStatistic" Width="1.5" PointX="9.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LearnDictionaryModel.SpeechPart" Width="1.5" PointX="5.25" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LearnDictionaryModel.Word" Width="1.5" PointX="3" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LearnDictionaryModel.WordMeaning" Width="1.5" PointX="7.5" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LearnDictionaryModel.WordMeaningStatistic" Width="1.5" PointX="9.75" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LearnDictionaryModel.WordEntry" Width="1.5" PointX="5.25" PointY="5.625" IsExpanded="true" />
+        <AssociationConnector Association="LearnDictionaryModel.FK_Book_Format" ManuallyRouted="false" />
+        <AssociationConnector Association="LearnDictionaryModel.FK_Book_Language" ManuallyRouted="false" />
+        <AssociationConnector Association="LearnDictionaryModel.AuthorBook" ManuallyRouted="false" />
+        <AssociationConnector Association="LearnDictionaryModel.FK_Word_Language" ManuallyRouted="false" />
+        <AssociationConnector Association="LearnDictionaryModel.FK_LearnStatistic_WordMeaning" ManuallyRouted="false" />
+        <AssociationConnector Association="LearnDictionaryModel.FK_WordMeaning_SpeechPart" ManuallyRouted="false" />
+        <AssociationConnector Association="LearnDictionaryModel.FK_WordMeaning_MasterWord" ManuallyRouted="false" />
+        <AssociationConnector Association="LearnDictionaryModel.FK_WordMeaning_TranslateWord" ManuallyRouted="false" />
+        <AssociationConnector Association="LearnDictionaryModel.FK_WordMeaningStatistic_WordMeaning" ManuallyRouted="false" />
+        <AssociationConnector Association="LearnDictionaryModel.FK_WordEntry_Book" ManuallyRouted="false" />
+        <AssociationConnector Association="LearnDictionaryModel.FK_WordEntry_Word" ManuallyRouted="false" />
+        <AssociationConnector Association="LearnDictionaryModel.WordTranslation" ManuallyRouted="false" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

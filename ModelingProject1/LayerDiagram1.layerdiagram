@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<layerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/SimpleShapesModel" dslVersion="1.0.0.0" Id="259c5ae1-e813-4854-b8df-47ad4e9b6c04" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/LayerDesigner">
+  <layers>
+    <layer Id="53a7d7cd-13ed-437a-adc8-ea26fffa8e7b" name="Layer1">
+      <references>
+        <reference Id="68c29889-d393-458a-94cf-e9f95929a55f" name="AuthorsWindow.xaml">
+          <ArtifactNode Label="AuthorsWindow.xaml" Category="CodeSchema_ProjectItem" Id="(Assembly=../DictionaryUI/DictionaryUI.csproj File=../DictionaryUI/AuthorsWindow.xaml)">
+            <Category Ref="File" />
+          </ArtifactNode>
+          <ExpandedNode Id="(Assembly=DictionaryUI Namespace=DictionaryUI Type=AuthorsWindow)" Label="AuthorsWindow" Category="CodeSchema_Class">
+            <LinkCategory Ref="Represents" />
+          </ExpandedNode>
+        </reference>
+        <reference Id="ceb30910-bde0-420c-b958-a573a7fd0160" name="AuthorsWindow.xaml.cs">
+          <ArtifactNode Label="AuthorsWindow.xaml.cs" Category="CodeSchema_ProjectItem" Id="(Assembly=../DictionaryUI/DictionaryUI.csproj File=../DictionaryUI/AuthorsWindow.xaml.cs)">
+            <Category Ref="File" />
+          </ArtifactNode>
+          <ExpandedNode Id="(Assembly=DictionaryUI Namespace=DictionaryUI Type=AuthorsWindow)" Label="AuthorsWindow" Category="CodeSchema_Class">
+            <LinkCategory Ref="Contains" />
+            <LinkCategory Ref="Represents" />
+          </ExpandedNode>
+        </reference>
+        <reference Id="00d7aa58-0334-4cfb-9b86-d1434126fca2" name="BookList.xaml">
+          <ArtifactNode Label="BookList.xaml" Category="CodeSchema_ProjectItem" Id="(Assembly=../DictionaryUI/DictionaryUI.csproj File=../DictionaryUI/BookList.xaml)">
+            <Category Ref="File" />
+          </ArtifactNode>
+          <ExpandedNode Id="(Assembly=DictionaryUI Namespace=DictionaryUI Type=BooksList)" Label="BooksList" Category="CodeSchema_Class">
+            <LinkCategory Ref="Represents" />
+          </ExpandedNode>
+        </reference>
+        <reference Id="5ca103c1-9e79-43e3-a7f3-e654483ea2f5" name="BookList.xaml.cs">
+          <ArtifactNode Label="BookList.xaml.cs" Category="CodeSchema_ProjectItem" Id="(Assembly=../DictionaryUI/DictionaryUI.csproj File=../DictionaryUI/BookList.xaml.cs)">
+            <Category Ref="File" />
+          </ArtifactNode>
+          <ExpandedNode Id="(Assembly=DictionaryUI Namespace=DictionaryUI Type=BooksList)" Label="BooksList" Category="CodeSchema_Class">
+            <LinkCategory Ref="Contains" />
+            <LinkCategory Ref="Represents" />
+          </ExpandedNode>
+        </reference>
+        <reference Id="783f4e59-148b-4fe9-a6c6-b97cdd0e1224" name="MainWindow.xaml">
+          <ArtifactNode Label="MainWindow.xaml" Category="CodeSchema_ProjectItem" Id="(Assembly=../DictionaryUI/DictionaryUI.csproj File=../DictionaryUI/MainWindow.xaml)">
+            <Category Ref="File" />
+          </ArtifactNode>
+          <ExpandedNode Id="(Assembly=DictionaryUI Namespace=DictionaryUI Type=MainWindow)" Label="MainWindow" Category="CodeSchema_Class">
+            <LinkCategory Ref="Represents" />
+          </ExpandedNode>
+        </reference>
+        <reference Id="795d08cd-5eac-4726-8b57-b0dab1ac202d" name="MainWindow.xaml.cs">
+          <ArtifactNode Label="MainWindow.xaml.cs" Category="CodeSchema_ProjectItem" Id="(Assembly=../DictionaryUI/DictionaryUI.csproj File=../DictionaryUI/MainWindow.xaml.cs)">
+            <Category Ref="File" />
+          </ArtifactNode>
+          <ExpandedNode Id="(Assembly=DictionaryUI Namespace=DictionaryUI Type=MainWindow)" Label="MainWindow" Category="CodeSchema_Class">
+            <LinkCategory Ref="Contains" />
+            <LinkCategory Ref="Represents" />
+          </ExpandedNode>
+        </reference>
+      </references>
+    </layer>
+    <layer Id="7252872b-62c0-4ea8-b8ba-3847ef78e765" name="Layer2">
+      <references>
+        <reference Id="61d786b7-e1b4-4fc9-9234-6bd86d20ad84" name="LearnWords.xaml">
+          <ArtifactNode Label="LearnWords.xaml" Category="CodeSchema_ProjectItem" Id="(Assembly=../DictionaryUI/DictionaryUI.csproj File=../DictionaryUI/LearnWords.xaml)">
+            <Category Ref="File" />
+          </ArtifactNode>
+          <ExpandedNode Id="(Assembly=DictionaryUI Namespace=DictionaryUI Type=LearnWords)" Label="LearnWords" Category="CodeSchema_Class">
+            <LinkCategory Ref="Represents" />
+          </ExpandedNode>
+          <ExpandedNode Id="(Assembly=DictionaryUI Namespace=DictionaryUI Type=(Name=Strategy ParentType=LearnWords))" Label="LearnWords‎.Strategy" Category="CodeSchema_Enum">
+            <LinkCategory Ref="Represents" />
+          </ExpandedNode>
+        </reference>
+        <reference Id="0c4c4bcb-12f4-4b20-bdc0-b999d0ed638c" name="LearnWords.xaml.cs">
+          <ArtifactNode Label="LearnWords.xaml.cs" Category="CodeSchema_ProjectItem" Id="(Assembly=../DictionaryUI/DictionaryUI.csproj File=../DictionaryUI/LearnWords.xaml.cs)">
+            <Category Ref="File" />
+          </ArtifactNode>
+          <ExpandedNode Id="(Assembly=DictionaryUI Namespace=DictionaryUI Type=LearnWords)" Label="LearnWords" Category="CodeSchema_Class">
+            <LinkCategory Ref="Contains" />
+            <LinkCategory Ref="Represents" />
+          </ExpandedNode>
+          <ExpandedNode Id="(Assembly=DictionaryUI Namespace=DictionaryUI Type=(Name=Strategy ParentType=LearnWords))" Label="LearnWords‎.Strategy" Category="CodeSchema_Enum">
+            <LinkCategory Ref="Represents" />
+          </ExpandedNode>
+        </reference>
+      </references>
+    </layer>
+  </layers>
+</layerModel>

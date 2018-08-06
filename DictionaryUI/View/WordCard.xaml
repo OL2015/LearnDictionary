@@ -1,0 +1,257 @@
+﻿<UserControl x:Class="DictionaryUI.WordCard"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:DictionaryUI"
+        xmlns:vm ="clr-namespace:DictionaryUI.ViewModel"
+        xmlns:wpf="http://wpfcontrols.com/"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
+        xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
+        xmlns:ignore="http://www.galasoft.ch/ignore"  
+        >
+    <!--DataContext="{Binding WordEntry, RelativeSource={RelativeSource Self}}"-->
+
+
+
+    <Grid Height="349">
+        <Grid.Triggers>
+            <EventTrigger RoutedEvent="TextBox.TextChanged">
+                <!--<BeginStoryboard>
+                    <Storyboard>
+                        <BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="IsEnabled"
+                                            Storyboard.TargetName="btnApply">
+                            <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="True"/>
+                        </BooleanAnimationUsingKeyFrames>
+                    </Storyboard>
+                </BeginStoryboard>-->
+            </EventTrigger>
+        </Grid.Triggers>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" MinHeight="234"/>
+            <RowDefinition Height="Auto" MinHeight="79.333"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10,5,22,5">
+            <StackPanel Orientation="Horizontal"  Background="AliceBlue">
+                <Label Content="Word" />
+
+                <TextBox Name="tbWord"
+                          Margin="10 0 10 0"
+                         Height="20"
+                          MinWidth="100"
+                          HorizontalAlignment="Stretch"
+                          VerticalAlignment="Center"
+                         Text="{Binding Path=Word.Value}"    >
+                </TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="btnSpeak"
+                Width="52"
+            	Margin="10,0,5,2"
+            	Padding="10 3"
+            	Content="Speak" 
+                Command="{Binding SpeakCommand}" />
+                <Button x:Name="btnMariamWebster"
+                     Width="104"
+            	Margin="5,0,5,2"
+            	Padding="10 3"
+                    Content="Mariam-Webster"
+                    Command="{Binding ShowMariamWebsterCommand}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <CheckBox Grid.Row="2" Grid.Column="0" x:Name="chbActiveOnly"  
+                          Margin="10 5"  
+                          MinWidth="100"
+                          HorizontalAlignment="Left" 
+                          VerticalAlignment="Center"
+                          IsChecked="{Binding Word.Archived}"  
+                          Content="Archived" 
+                      >
+
+                </CheckBox>
+                
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Grid.Row="3" Margin="10,5">
+            <Label Content="Meaning(s)" />
+            <StackPanel Orientation="Horizontal" RenderTransformOrigin="0.5,0.5" Height="197">
+                <StackPanel.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="0.253"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </StackPanel.RenderTransform>
+                <GroupBox Header="New meaning">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Name="tbMeaning"
+                              Margin="10"
+                              MinWidth="130"
+                              HorizontalAlignment="Stretch"
+                              VerticalAlignment="Center" 
+                                Text="{Binding MeaningText}"
+                               >
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="GotFocus">
+                                        <cmd:EventToCommand Command="{Binding MeaningGotFocusCommand, Mode=OneWay }"
+                                                    CommandParameter="True" />
+                                    </i:EventTrigger>
+                                    <i:EventTrigger EventName="LostFocus">
+                                        <cmd:EventToCommand Command="{Binding MeaningGotFocusCommand, Mode=OneWay }"
+                                                    CommandParameter="False" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <!--<TextBox.ContextMenu>
+                                    <ContextMenu>
+                                        <ContextMenu.ItemsSource>
+                                            <CompositeCollection>
+                                                <MenuItem Command="ApplicationCommands.Cut"/>
+                                                <MenuItem Command="ApplicationCommands.Copy"/>
+                                                <MenuItem Command="ApplicationCommands.Paste"/>
+                                                <MenuItem Header="Standard MenuItem 1" />
+                                                <MenuItem Header="Standard MenuItem 2" />
+                                                <MenuItem Header="Standard MenuItem 3" />
+                                            </CompositeCollection>
+                                        </ContextMenu.ItemsSource>
+                                    </ContextMenu>
+                                </TextBox.ContextMenu>-->
+                            </TextBox>
+                            <TextBlock Name="tblSpeechPart"
+                                       Margin="0 10"
+                                       MinWidth="20"
+                                       Text="{Binding Path=ShortEng}" FontSize="18" FontWeight="Bold" TextAlignment="Left" Foreground="#FF16B2F2" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="10 0">
+                            <Label Content="Language" />
+                            <ComboBox Name="cbMiningLang"
+                                        Margin="10 0 10 0"
+                                        MinWidth="70"
+                                        HorizontalAlignment="Stretch"
+                                       VerticalAlignment="Center"
+                                      ItemsSource="{Binding Languages}" 
+                                      SelectedItem="{Binding WordMeaningLanguage}"
+                                      DisplayMemberPath = "ShortName"/>
+                        </StackPanel>
+                        <ListBox Name="lstAllMeanings"
+                         Margin="5 5 10 5"
+                         MinWidth="150"
+                         MinHeight="30" 
+                         SelectionMode="Multiple"
+                         ItemsSource="{Binding Word.WordMeanings}"
+                         SelectedItem ="{Binding SelectedFromAllMeaning}" 
+                          DisplayMemberPath = "{Binding Word1.Value}" Height="95">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate >
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Name ="txtWord1" Text="{Binding Path=Word1.Value}" 
+                                                   HorizontalAlignment="Stretch">
+                                            <TextBlock.ToolTip>
+                                                <StackPanel Name="spContainer">
+                                                    <TextBlock Name="tbTooltip" Text="{Binding Path=SpeechPart.NameEng}"/>
+                                                </StackPanel>
+                                            </TextBlock.ToolTip>                                            
+                                </TextBlock>
+                                        <TextBlock Text="{Binding Path=SpeechPart.ShortEng, StringFormat=' ({0})'}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="OnPreviewMouseDown">
+                                    <cmd:EventToCommand Command="{Binding AllMeaningsPrevMouseDownCommand, Mode=OneWay }"
+                                                    CommandParameter="{Binding Mode=OneWay}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <!--<ListBox.ItemContainerStyle>
+                         SelectionMode="Multiple" 
+                        <Style TargetType="ListBoxItem">
+                            <EventSetter Event="MouseDoubleClick"
+                        Handler="OnMouseDoubleClickRemoveWord" />
+                        </Style>
+                    </ListBox.ItemContainerStyle>-->
+                        </ListBox>
+                    </StackPanel>
+                </GroupBox>
+                <StackPanel Margin="5">
+                    <Button Name="btnAddNewMeaning"
+                            Margin="0 20"
+                            Padding="5 2"
+                            Content="Add New"
+                           Command="{Binding AddNewMeaningCommand}"/>
+
+                    <Button Name="btnBindMeaning"
+                            Margin="0 40 0 0"
+                            Padding="5 2"
+                            Content="Bind"
+                            Command="{Binding AddMeaningCommand}"/>
+                    <Button Name="btnUnbindMeaning" 
+                            Margin="0 5 0 0"
+                            Padding="5 2"
+                            Content="Unbind" 
+                            Command="{Binding RemoveMeaningCommand}" Height="24"/>
+                </StackPanel>
+                <GroupBox Header="Entries" Width="267"
+                           >
+                    <ListBox Name="wordEntries"
+                         Margin="5 5 10 5"
+                         MinWidth="150"
+                         MinHeight="30" 
+                         SelectionMode="Multiple"
+                         ItemsSource="{Binding Word.WordEntries}"
+                         SelectedItem ="{Binding SelectedFromAllMeaning}" 
+                          >
+                        <ListBox.ItemTemplate>
+                            <DataTemplate >
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Name ="txtWord1" Text="{Binding Path=Book.Name}" 
+                                                   HorizontalAlignment="Stretch">
+                                        <TextBlock.ToolTip>
+                                            <StackPanel Name="spContainer">
+                                                <TextBlock Name="tbTooltip" Text="{Binding Path=Book.Page}"/>
+                                            </StackPanel>
+                                        </TextBlock.ToolTip>                                            
+                                </TextBlock>
+                                    <TextBlock Text="{Binding Path=Page, StringFormat=', {0}'}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="OnPreviewMouseDown">
+                                <cmd:EventToCommand Command="{Binding AllMeaningsPrevMouseDownCommand, Mode=OneWay }"
+                                                    CommandParameter="{Binding Mode=OneWay}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <!--<ListBox.ItemContainerStyle>
+                         SelectionMode="Multiple" 
+                        <Style TargetType="ListBoxItem">
+                            <EventSetter Event="MouseDoubleClick"
+                        Handler="OnMouseDoubleClickRemoveWord" />
+                        </Style>
+                    </ListBox.ItemContainerStyle>-->
+                    </ListBox>
+                </GroupBox>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Grid.Row="4" 
+                    Orientation="Horizontal" 
+                    HorizontalAlignment="Left"
+                    Margin="20,20,0,21.333" Width="146">
+
+            <Button Name="btnSaveWord"
+                    Margin="5 0"
+                    Padding="20 10"
+                    Content="Save"  
+                    Command="{Binding SaveWordCommand}" Width="136"/>
+        </StackPanel>
+    </Grid>
+
+
+</UserControl>

@@ -1,0 +1,191 @@
+﻿<Window x:Class="DictionaryUI.BookEntryCard"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:DictionaryUI"
+        Title="Book" SizeToContent="WidthAndHeight"
+        xmlns:vm ="clr-namespace:DictionaryUI.ViewModel"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
+        xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
+        xmlns:ignore="http://www.galasoft.ch/ignore"  
+        DataContext="{Binding BookEntryViewModel, Source={StaticResource  Locator}}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center">
+            <Label Name="lblName" 
+               Margin="10 5" 
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top"
+               Content="Name" />
+            <TextBox Name="tbName" 
+                     Text="{Binding SelectedBook.Name}"
+                    Margin="10 0 10 0"
+                     Padding="3"
+                    VerticalAlignment="Center"
+                    Width="300"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" >
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <Label Name="lblAuthor"                        
+                       Margin="10 5" 
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Center"
+                       Content="Authors" />
+                <TextBox Name="tbAuthorString" 
+                 Margin="10 0 10 0" 
+                 HorizontalAlignment="Stretch"
+                 VerticalAlignment="Center"
+                         IsReadOnly="true"
+                         Text="{Binding SelectedBook.AuthorsString, Mode=OneWay}"
+                     Width="290"/>
+            </StackPanel>
+            <StackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center" MaxHeight="210">
+                <ListBox Name="lstBookAuthors"
+                         Margin="15 5 10 5"
+                         MinWidth="150"
+                         MinHeight="30"
+                         SelectionMode="Single"
+                         DisplayMemberPath ="Name"
+                         ItemsSource="{Binding SelectedBook.Authors}"
+                         SelectedItem="{Binding SelectedAuthorRemove}">
+                          <!--<ListBox.ItemContainerStyle>
+                         <Style TargetType="ListBoxItem">
+
+                    <EventSetter Event="MouseDoubleClick"
+                        Handler="OnMouseDoubleClickRemoveAuthor" />
+                    </Style>
+                    </ListBox.ItemContainerStyle>-->
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDoubleClick">
+                            <cmd:EventToCommand Command="{Binding RemoveAuthorCommand, Mode=OneWay }"
+                            CommandParameter="{Binding Mode=OneWay}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ListBox>
+                <StackPanel Margin="5">
+                    <Button Name="btnAddAuthor"
+                            Margin="0 2"
+                            Padding="5 2"
+                            Content="Add" 
+                            Command ="{Binding AddAuthorCommand  }"  >
+                        
+                        </Button>
+                    <Button Name="btnRemoveAuthor" 
+                            Margin="0 2"
+                            Padding="5 2"
+                            Content="Remove" 
+                             Command ="{Binding RemoveAuthorCommand  }" />
+                        
+                </StackPanel>
+                <ListBox Name="lstAllAuthors"
+                         Margin="15 5"
+                         MinWidth="150"
+                         MinHeight="30"
+                         SelectionMode="Single"
+                         DisplayMemberPath ="Name"
+                         ItemsSource="{Binding AllAuthors}" 
+                         SelectedItem="{Binding SelectedAuthorAdd}">
+                    <!--<ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <EventSetter Event="MouseDoubleClick"
+                        Handler="OnMouseDoubleClickAddAuthor" />
+                        </Style>
+                    </ListBox.ItemContainerStyle>-->
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDoubleClick">
+                            <cmd:EventToCommand Command="{Binding AddAuthorCommand, Mode=OneWay }"
+                            CommandParameter="{Binding Mode=OneWay}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    
+                </ListBox>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal">
+                <Label Name="lblLanguage" 
+                       Margin="10 5" 
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Center"
+                       Content="Language" />
+                <ComboBox Name="cbLanguage"
+                        Margin="10 0 10 0" 
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        DisplayMemberPath="ShortName"
+                        SelectedValue="{Binding SelectedBook.Language_ID}"                      
+                        SelectedValuePath="Language_ID"
+                        ItemsSource="{Binding Languages}" 
+                        local:ComboUtil.AllowNull="true"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <Label Name="lblFormat" 
+                        Margin="10 5" 
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Content="Format" />
+                <ComboBox Name="cbFormat"
+                          Margin="10 0 10 0"
+                          HorizontalAlignment="Stretch"
+                          VerticalAlignment="Center"
+                          DisplayMemberPath="Name"
+                          SelectedValue="{Binding SelectedBook.Format_ID}"
+                          ItemsSource="{Binding Formats}" 
+                          SelectedValuePath="Format_ID"/>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Grid.Row="4" Orientation="Horizontal" VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <Label Name="lblNumberPages" 
+               Margin="10 5 5 5" 
+               HorizontalAlignment="Left"
+               VerticalAlignment="Center"
+               Content="Number of pages" />
+                <TextBox Name="tbNumberPages" 
+                     Text="{Binding SelectedBook.NumberOfPages}"
+                 Margin="0 0 10 0" 
+                 VerticalAlignment="Center"
+                     Width="50"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <Label Name="lblRegisterData" 
+               Margin="10 5 5 5" 
+               HorizontalAlignment="Left"
+               VerticalAlignment="Center"
+               Content="Register Date" />
+                <TextBox Name="tbRegisterData" 
+                     Text="{Binding SelectedBook.RegisterDate, StringFormat={}{0:d}}"
+                 Margin="0 0 10 0" 
+                 VerticalAlignment="Center"
+                     Width="150"/>
+            </StackPanel>
+        </StackPanel>
+
+
+        <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Name="btnSaveBook"
+                    Margin="5 15"
+                    Padding="20 10"
+                    Content="Save"                    
+                    Command="{Binding SaveBookCommand}" />
+            <Button Name="btnCancelBook"
+                    Margin="5 15"
+                    Padding="20 10"
+                    IsCancel="True"
+                    Content="Cancel" 
+                    Command="{Binding CancelEditCommand}" />
+        </StackPanel>
+
+    </Grid>
+</Window>

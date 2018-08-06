@@ -1,0 +1,67 @@
+﻿<Window x:Class="DictionaryUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:vm="clr-namespace:DictionaryUI.ViewModel" 
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
+            xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
+            xmlns:ignore="http://www.galasoft.ch/ignore"
+            mc:Ignorable="d ignore"
+        Title="MainWindow" Height="600" Width="400"
+        DataContext="{Binding MainWindow, Source={StaticResource  Locator}}">
+    
+    <StackPanel  >
+        
+
+        <TextBlock Height="Auto" HorizontalAlignment="Left" Margin="10,10,0,0" 
+                   Name="txtResult" Text="Choose an Action!"  Width="Auto" />
+        <Button Content="Continue New Words" Height="30"  Command="{Binding ContinueNewWordsCommand}" 
+                Margin="10,10,20,0" />
+        <Button Content="Book List" Height="30"  Command="{Binding OpenBooksWindowCommand}" 
+                Margin="10,10,20,0" />
+        <Button Content="Word List" Height="30"  
+                Margin="10,10,20,0" Name="btnGetWordList" Command="{Binding OpenWordsWindowCommand}" />
+        <Button Content="Author List" Height="30"  Margin="10,10,20,0"
+                Command="{Binding OpenAuthorWindowCommand}" />
+        <Button Content="Learn Words" Name="btnLearnWords" Height="30" 
+                 Command="{Binding OpenLearnWordsWindowCommand}" Margin="10,10,20,0"  />
+        <Button Content="Enlist Servers" Name="btnEnlistServers" Height="30" 
+                 Command="{Binding OpenEnlistServersWindowCommand}" Margin="10,10,20,0"  />
+
+        <ListView Name="lstAuthors" Grid.Row="1" SelectionMode="Single" Margin="4" 
+                  ItemsSource="{Binding DataServers}" 
+                  SelectedItem="{Binding SelectedServer, Mode=TwoWay}"
+                  >
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Сервер" Width="250" DisplayMemberBinding="{Binding Path=ServerName}" 
+                                     />
+                    <GridViewColumn Header="Версия" Width="100" 
+                                    DisplayMemberBinding="{Binding Path=Version}" 
+                                     />
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <cmd:EventToCommand Command="{Binding ServerNameChangedCommand, Mode=OneWay}" 
+                                        CommandParameter="{Binding Path=Text, ElementName=txtServer}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </GridView>
+            </ListView.View>
+             
+        </ListView>
+        <DataGrid Name="dgAuthors" Grid.Row="1" SelectionMode="Single" Margin="4" 
+                  AutoGenerateColumns="True"
+                  ItemsSource="{Binding DataServers}" 
+                  SelectedItem="{Binding SelectedServer, Mode=TwoWay}"
+                  CanUserAddRows="False"
+                  >
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <cmd:EventToCommand Command="{Binding ServerNameChangedCommand, Mode=OneWay}" 
+                                        CommandParameter="{Binding Path=Text, ElementName=txtServer}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </DataGrid>
+    </StackPanel>
+</Window>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="4c813a31dd5f442597c4428ed6c3c26e" Name="Diagram1" ZoomLevel="83">
+        <EntityTypeShape EntityType="LearnDictionaryModel.Author" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="LearnDictionaryModel.Book" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="LearnDictionaryModel.Format" Width="1.5" PointX="6.25" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="LearnDictionaryModel.Language" Width="1.5" PointX="6.25" PointY="5.125" IsExpanded="true" />
+        <AssociationConnector Association="LearnDictionaryModel.FK_Book_Format" ManuallyRouted="false" />
+        <AssociationConnector Association="LearnDictionaryModel.FK_Book_Language" ManuallyRouted="false" />
+        <AssociationConnector Association="LearnDictionaryModel.AuthorBook" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="LearnDictionaryModel.LearnStatistic" Width="1.75" PointX="14.875" PointY="1.75" />
+        <EntityTypeShape EntityType="LearnDictionaryModel.Word" Width="1.5" PointX="8.5" PointY="3.625" />
+        <EntityTypeShape EntityType="LearnDictionaryModel.WordMeaning" Width="1.5" PointX="12.875" PointY="2.75" />
+        <EntityTypeShape EntityType="LearnDictionaryModel.WordMeaningStatistic" Width="1.875" PointX="14.75" PointY="4.75" />
+        <AssociationConnector Association="LearnDictionaryModel.FK_Word_Language" />
+        <AssociationConnector Association="LearnDictionaryModel.FK_LearnStatistic_WordMeaning" />
+        <AssociationConnector Association="LearnDictionaryModel.FK_WordMeaning_MasterWord" />
+        <AssociationConnector Association="LearnDictionaryModel.FK_WordMeaning_TranslateWord" />
+        <AssociationConnector Association="LearnDictionaryModel.FK_WordMeaningStatistic_WordMeaning" />
+        <EntityTypeShape EntityType="LearnDictionaryModel.WordEntry" Width="1.5" PointX="10.625" PointY="2.125" />
+        <AssociationConnector Association="LearnDictionaryModel.FK_WordEntry_Book" />
+        <AssociationConnector Association="LearnDictionaryModel.FK_WordEntry_Word" />
+        <EntityTypeShape EntityType="LearnDictionaryModel.SpeechPart" Width="1.5" PointX="0.75" PointY="4.875" />
+        <AssociationConnector Association="LearnDictionaryModel.FK_WordMeaning_SpeechPart" />
+        <AssociationConnector Association="LearnDictionaryModel.WordTranslation" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

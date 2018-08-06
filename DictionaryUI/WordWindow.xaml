@@ -1,0 +1,125 @@
+﻿<Window x:Class="DictionaryUI.WordWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="WordWindow" SizeToContent="WidthAndHeight">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10 5">
+            <Label Content="Book" />
+            <ComboBox Name="cbBooks"
+                          Margin="10 0 10 0"
+                          MinWidth="200"
+                          HorizontalAlignment="Stretch"
+                          VerticalAlignment="Center"
+                          DisplayMemberPath="Name"
+                          SelectedValue="{Binding Path=[Book_ID]}"
+                          SelectedValuePath="Book_ID"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10 5">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Page" />
+                <TextBox Name="tbPage"
+                         Margin="10 0 10 0"
+                         Width="80"
+                         HorizontalAlignment="Stretch"
+                         VerticalAlignment="Center"
+                         Text="{Binding Path=[Page], Mode=TwoWay}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Date"
+                       Margin="20 0 0 0"/>
+                <TextBox Name="tbDate"
+                         Margin="10 0 10 0"
+                         Width="150"
+                         HorizontalAlignment="Stretch"
+                         VerticalAlignment="Center"
+                         Text="{Binding Path=[Date], Mode=TwoWay, StringFormat={}{0:dd.MM.yyyy}}"/>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10 5">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Word" />
+                <TextBox Name="tbWord"
+                          Margin="10 0 10 0"
+                          MinWidth="100"
+                          HorizontalAlignment="Stretch"
+                          VerticalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Language" />
+                <ComboBox Name="cbWordLang"
+                          Margin="10 0 10 0"
+                          HorizontalAlignment="Stretch"
+                          VerticalAlignment="Center"/>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Grid.Row="3" Margin="10 5">
+            <Label Content="Meaning(s)" />
+            <StackPanel Orientation="Horizontal">
+                <GroupBox Header="New word">
+                    <StackPanel>
+                        <TextBox Name="tbMeaning"
+                              Margin="10"
+                              MinWidth="150"
+                              HorizontalAlignment="Stretch"
+                              VerticalAlignment="Center"/>
+                        <StackPanel Orientation="Horizontal">
+                        <Label Content="Language" />
+                        <ComboBox Name="cbMiningLang"
+                          Margin="10 0 10 0"
+                          HorizontalAlignment="Stretch"
+                          VerticalAlignment="Center"
+                          />
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+                <StackPanel Margin="5">
+                    <Button Name="btnAddWord"
+                            Margin="0 2"
+                            Padding="5 2"
+                            Content="Add"/>
+                    <Button Name="btnRemoveWord" 
+                            Margin="0 2"
+                            Padding="5 2"
+                            Content="Remove"/>
+                </StackPanel>
+                <ListBox Name="lstMeanings"
+                         Margin="5 5 10 5"
+                         MinWidth="150"
+                         MinHeight="30"
+                         SelectionMode="Multiple">
+                    <!--<ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <EventSetter Event="MouseDoubleClick"
+                        Handler="OnMouseDoubleClickRemoveWord" />
+                        </Style>
+                    </ListBox.ItemContainerStyle>-->
+                </ListBox>
+            </StackPanel>
+        </StackPanel>
+        
+        <StackPanel Grid.Row="4" 
+                    Orientation="Horizontal" 
+                    HorizontalAlignment="Center"
+                    Margin="20">
+            <Button Name="btnSaveWord"
+                    Margin="5 0"
+                    Padding="20 10"
+                    Content="Save"/>
+            <Button Name="btnCancelWord"
+                    Margin="5 0"
+                    Padding="20 10"
+                    Content="Cancel"
+                    IsCancel="True"/>
+        </StackPanel>
+    </Grid>
+</Window>
